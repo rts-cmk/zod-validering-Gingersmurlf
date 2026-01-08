@@ -33,7 +33,7 @@ export default function RegistrationForm() {
 
     const result = RegistrationFormSchema.safeParse(formDataObject);
 
-    const { password, confirmPassword, ...rest } = result;
+    const { password, confirmPassword, ...rest } = result.data;
     setSubmitted(rest);
   };
 
