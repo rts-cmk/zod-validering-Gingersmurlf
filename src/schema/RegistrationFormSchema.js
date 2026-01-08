@@ -4,8 +4,8 @@ const minDate = new Date("1900-01-01");
 
 const RegistrationFormSchema = z
   .object({
-    firstName: z.string().min(2, "Fornavn skal være mindst 2 tegn langt"),
-    lastName: z.string().min(2, "Efternavn skal være mindst 2 tegn langt"),
+    firstName: z.string().min(1, "Fornavn skal være mindst 1 tegn langt"),
+    lastName: z.string().min(1, "Efternavn skal være mindst 1 tegn langt"),
     email: z.email("Email skal være gyldig"),
     password: z
       .string()
@@ -49,9 +49,13 @@ const RegistrationFormSchema = z
       ),
     phoneNumber: z
       .string()
-      .refine((val) => val === "" || /^[0-9]{8}$/.test(val), {
-        message: "Telefonnummer skal være præcis 8 cifre",
-      })
+      .refine(
+        (val) =>
+          val === "" || /^([+]{1}\d{1,3}|00\d{1,3}|)?[\d\s]{8,25}$/.test(val),
+        {
+          message: "Telefonnummer er ikke gyldigt",
+        },
+      )
       .optional(),
     username: z
       .string()
